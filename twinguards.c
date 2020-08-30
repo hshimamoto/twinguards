@@ -124,6 +124,9 @@ void target_invoke(struct target *t)
 	if (pid < 0)
 		return; // fork failed
 	if (pid == 0) {
+		// close all fds
+		for (int i = 3; i < 256; i++)
+			close(i);
 		execvp(argv[0], argv);
 		logf("execvp failed: %d\n", errno);
 		_exit(1);
