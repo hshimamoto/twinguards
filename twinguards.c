@@ -261,7 +261,7 @@ void guard(pid_t pid, int rfd, int wfd, int ping)
 				logf("ping error: %d\n", errno);
 				break;
 			}
-			sleep(120);
+			sleep(240);
 			ping = 0;
 
 			gettimeofday(&now, NULL);
@@ -269,7 +269,7 @@ void guard(pid_t pid, int rfd, int wfd, int ping)
 
 		FD_ZERO(&fds);
 		FD_SET(rfd, &fds);
-		tv.tv_sec = 60;
+		tv.tv_sec = 240;
 		tv.tv_usec = 0;
 		int ret = select(rfd + 1, &fds, NULL, NULL, &tv);
 		if (ret < 0) {
@@ -278,7 +278,7 @@ void guard(pid_t pid, int rfd, int wfd, int ping)
 		}
 
 		gettimeofday(&tv, NULL);
-		if ((tv.tv_sec - now.tv_sec) > 180) {
+		if ((tv.tv_sec - now.tv_sec) > 300) {
 			logf("timeout\n");
 			break;
 		}
