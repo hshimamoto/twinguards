@@ -256,12 +256,12 @@ void guard(pid_t pid, int rfd, int wfd, int ping)
 		if (ping) {
 			if (master)
 				check();
-			logf("send ping\n");
+			//logf("send ping\n");
 			if (write(wfd, &ping, sizeof(ping)) < 0) {
 				logf("ping error: %d\n", errno);
 				break;
 			}
-			sleep(60);
+			sleep(120);
 			ping = 0;
 
 			gettimeofday(&now, NULL);
@@ -278,7 +278,7 @@ void guard(pid_t pid, int rfd, int wfd, int ping)
 		}
 
 		gettimeofday(&tv, NULL);
-		if ((tv.tv_sec - now.tv_sec) > 120) {
+		if ((tv.tv_sec - now.tv_sec) > 180) {
 			logf("timeout\n");
 			break;
 		}
@@ -288,7 +288,7 @@ void guard(pid_t pid, int rfd, int wfd, int ping)
 				logf("ping read error: close or %d\n", errno);
 				break;
 			}
-			logf("get ping\n");
+			//logf("get ping\n");
 
 			// should be ping = 1
 			ping = 1;
