@@ -341,6 +341,7 @@ int main(int argc, char **argv)
 	}
 	guardfile = argv[1];
 	signal(SIGCHLD, SIG_IGN);
+	signal(SIGPIPE, SIG_IGN);
 	for (;;)
 		twin();
 	return 0;
