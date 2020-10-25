@@ -258,12 +258,12 @@ void guard(pid_t pid, int rfd, int wfd, int ping)
 		if (ping) {
 			if (master)
 				check();
+			sleep(sleeptime);
 			//logf("send ping\n");
 			if (write(wfd, &ping, sizeof(ping)) < 0) {
 				logf("ping error: %d\n", errno);
 				break;
 			}
-			sleep(sleeptime);
 			ping = 0;
 
 			gettimeofday(&now, NULL);
